@@ -1,14 +1,14 @@
 
 <div class="form-group">
     <label for="">Employee Name</label>
-    <input type="text" class="form-control " name="name" value="{{ old('name', $partTime->name) }}">
+    <input type="text" class="form-control " name="name" value="{{ old('name', $employee->name) }}">
 
 </div>
 
 
 <div class="form-group">
     <label for="">Email</label>
-    <input type="email" class="form-control " name="email" value="{{ old('email', $partTime->email) }}">
+    <input type="email" class="form-control " name="email" value="{{ old('email', $employee->email) }}">
 </div>
     <div class="form-group">
         <label for="">Change Password</label>
@@ -18,13 +18,20 @@
 
 <div class="form-group">
     <label for="">Date Of Birth</label>
-    <input type="text" class="form-control " name="date_of_birth" value="{{ old('date_of_birth', $partTime->date_of_birth) }}">
+    <input type="text" class="form-control " name="date_of_birth" value="{{ old('date_of_birth', $employee->date_of_birth) }}">
 </div>
 
 <div class="form-group">
     <label for="">Phone Number</label>
-    <input type="text" class="form-control " name="phone" value="{{ old('phone', $partTime->phone) }}">
+    <input type="text" class="form-control " name="phone" value="{{ old('phone', $employee->phone) }}">
 </div>
+
+<div class="form-group">
+    <label for="">Address</label>
+    <input type="text" class="form-control " name="address" value="{{ old('address', $employee->address) }}">
+</div>
+
+
 
 <div class="form-group">
     <label for="">Specialization</label>
@@ -36,6 +43,10 @@
     <input type="text" class="form-control " name="graduation_year" value="{{ old('graduation_year', $partTime->graduation_year) }}">
 </div>
 
+<div class="form-group">
+    <label for="">Bank account number</label>
+    <input type="text" class="form-control " name="bank_account_number" value="{{ old('bank_account_number', $employee->bank_account_number) }}">
+</div>
 
 <div class="form-group">
     <label for="">Tax % (you can lit it empty to stop tax from us)</label>

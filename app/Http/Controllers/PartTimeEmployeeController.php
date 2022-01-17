@@ -118,12 +118,13 @@ class PartTimeEmployeeController extends Controller
     }
     public function profile()
     {
-        $userId = Auth::id();
-        $employee = User::findOrFail($userId)->join('part_time_employees', 'part_time_employees.user_id', '=', 'users.id')->first();
+        $id = Auth::id();
+        $employee = User::findOrFail($id);
+        $partTime = PartTimeEmployee::where('user_id' , $employee->id)->first();
         return view('parttime.profile', [
-            'partTime' => $employee,
+            'employee' =>$employee ,
+            'partTime' => $partTime,
         ]);
-
     }
 
 

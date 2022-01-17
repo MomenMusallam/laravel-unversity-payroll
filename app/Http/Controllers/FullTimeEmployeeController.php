@@ -120,11 +120,14 @@ class FullTimeEmployeeController extends Controller
     }
     public function profile()
     {
-        $userId = Auth::id();
-        $employee = User::findOrFail($userId)->join('full_time_employees', 'full_time_employees.user_id', '=', 'users.id')->first();
+        $id = Auth::id();
+        $employee = User::findOrFail($id);
+        $fullTimeEmployee = FullTimeEmployee::where('user_id' , $employee->id)->first();
         return view('fulltime.profile', [
-            'fullTime' => $employee,
+            'employee' => $employee,
+            'fullTime' =>$fullTimeEmployee
         ]);
+
 
     }
 

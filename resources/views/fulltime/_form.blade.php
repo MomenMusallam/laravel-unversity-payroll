@@ -1,14 +1,14 @@
 
 <div class="form-group">
     <label for="">Employee Name</label>
-    <input type="text" class="form-control " name="name" value="{{ old('name', $fullTime->name) }}">
+    <input type="text" class="form-control " name="name" value="{{ old('name', $employee->name) }}">
 
 </div>
 
 
 <div class="form-group">
     <label for="">Email</label>
-    <input type="email" class="form-control " name="email" value="{{ old('email', $fullTime->email) }}">
+    <input type="email" class="form-control " name="email" value="{{ old('email', $employee->email) }}">
 </div>
 
 <div class="form-group">
@@ -19,12 +19,17 @@
 
 <div class="form-group">
     <label for="">Date Of Birth</label>
-    <input type="text" class="form-control " name="date_of_birth" value="{{ old('date_of_birth', $fullTime->date_of_birth) }}">
+    <input type="text" class="form-control " name="date_of_birth" value="{{ old('date_of_birth', $employee->date_of_birth) }}">
 </div>
 
 <div class="form-group">
     <label for="">Phone Number</label>
-    <input type="text" class="form-control " name="phone" value="{{ old('phone', $fullTime->phone) }}">
+    <input type="text" class="form-control " name="phone" value="{{ old('phone', $employee->phone) }}">
+</div>
+
+<div class="form-group">
+    <label for="">Address</label>
+    <input type="text" class="form-control " name="address" value="{{ old('address', $employee->address) }}">
 </div>
 
 <div class="form-group">
@@ -39,6 +44,10 @@
 
 
 
+<div class="form-group">
+    <label for="">Bank account number</label>
+    <input type="text" class="form-control " name="bank_account_number" value="{{ old('bank_account_number', $employee->bank_account_number) }}">
+</div>
 
 <div class="form-group">
     <label for="payment_method">Payment Method</label>
