@@ -3,14 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\FullTimeEmployee;
+use App\Models\salary;
 use App\Models\User;
+use App\Models\Vacation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class FullTimeEmployeeController extends Controller
 {
+    public function incomes(){
+        $user = Auth::user();
+        $incomes = salary::where('user_id' , $user->id)->paginate(20);
+        return view('parttime.income',['user'=>$user , 'incomes' => $incomes]);
+    }
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboard()
+    {
+        $user = Auth::user();
+        $sallary = salary::where('user_id' , $user->id)->get();
+        $totalIncome = 0 ;
+        foreach ($sallary as $sa){
+            $totalIncome = $totalIncome + $sa->total_salary;
+        }
+        $vacations  =  Vacation::where('notes' ,'approved')->get();
+        $vacation_num = 0 ;
+        foreach ($vacations as $vacation){
+            $vacation_num=   $vacation_num + 1;
+        }
+
+        $user->total = $totalIncome;
+        $user->vacation_num =   $vacation_num;
+        $fulltime = FullTimeEmployee::where('user_id' , $user->id)->first();
+        $user->avrg =      $vacation_num / $fulltime->number_of_vacations ;
+
+        return view('fulltime.index' , ['user' => $user , 'fulltime' => $fulltime]);
+    }    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,12 +51,14 @@ class FullTimeEmployeeController extends Controller
     {
         $employees = User::join('full_time_employees', 'full_time_employees.user_id', '=', 'users.id')
             ->select()
-            ->paginate(1);
+            ->paginate(10);
 //            dd($employees);
         return view('admin.fulltime.index', [
             'employees' => $employees,
         ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

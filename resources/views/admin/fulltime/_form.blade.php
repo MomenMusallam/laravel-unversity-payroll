@@ -28,10 +28,10 @@
     <input type="text" class="form-control " name="phone" value="{{ old('phone', $employee->phone) }}">
 </div>
 
-<div class="form-group">
-    <label for="">Address</label>
-    <input type="text" class="form-control " name="address" value="{{ old('address', $employee->address) }}">
-</div>
+    <div class="form-group">
+        <label for="">Address</label>
+        <input type="text" class="form-control " name="address" value="{{ old('address', $employee->address) }}">
+    </div>
 
 <div class="form-group">
     <label for="">Specialization</label>
@@ -73,7 +73,7 @@
         <div class="form-check">
             <input class="form-check-input" type="radio" name="payment_method" id="status-active" value="check" @if(old('status', $fullTimeEmployee->payment_method) == 'check') checked @endif>
             <label class="form-check-label" for="status-active">
-                Checks
+                Cheques
             </label>
         </div>
         <div class="form-check">

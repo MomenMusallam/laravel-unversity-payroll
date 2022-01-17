@@ -15,6 +15,13 @@ class PartTimeEmployeeHourWorkedController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function userHours($id){
+        $tasks = PartTimeEmployeeHourWorked::where('user_id' , $id)
+            ->paginate(10);
+        return view('parttime.workedhour.index', [
+            'tasks' => $tasks,
+        ]);
+    }
     public function index()
     {
         $tasks = PartTimeEmployeeHourWorked::where('user_id' , Auth::id())
@@ -32,6 +39,22 @@ class PartTimeEmployeeHourWorkedController extends Controller
      */
     public function create()
     {
+        $worked = PartTimeEmployeeHourWorked::where('user_id' , Auth::id())->where('notes','not paid')->get();
+        $employee = PartTimeEmployee::where('user_id' , Auth::id())->first();
+        $total_hours = 0 ;
+        foreach ($worked as $task){
+            $total_hours = $total_hours + $task->hours_amounts;
+        }
+        if($total_hours < $employee->total_hours){
+            return view('parttime.workedhour.create', [
+                'task' => new PartTimeEmployeeHourWorked(),
+                'massge' => 'Please stick to the allowed hours',
+                'available_hours' => $employee->total_hours - $total_hours ,
+            ]);
+        }else{
+            return redirect()->route('workinghours.index');
+        }
+
         return view('parttime.workedhour.create', [
             'task' => new PartTimeEmployeeHourWorked(),
         ]);
@@ -45,11 +68,25 @@ class PartTimeEmployeeHourWorkedController extends Controller
      */
     public function store(Request $request)
     {
+        $worked = PartTimeEmployeeHourWorked::where('user_id' , Auth::id())->where('notes','not paid')->get();
+        $employee = PartTimeEmployee::where('user_id' , Auth::id())->first();
+        $total_hours = 0 ;
+        foreach ($worked as $task){
+            $total_hours = $total_hours + $task->hours_amounts;
+        }
+        $avalibile = $employee->total_hours - $total_hours ;
+        if($request['hours_amounts'] <= $avalibile){
         $request['notes'] = 'not paid';
         $request['user_id'] = Auth::id();
         PartTimeEmployeeHourWorked::create($request->all());
         return redirect()->route('workinghours.index');
-
+          }else {
+        return view('parttime.workedhour.create', [
+            'task' => new PartTimeEmployeeHourWorked(),
+            'massge' => 'You have exceeded the limit of hours',
+            'available_hours' => $avalibile ,
+        ]);
+    }
     }
 
     /**

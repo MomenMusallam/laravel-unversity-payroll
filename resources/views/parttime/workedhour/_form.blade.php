@@ -6,7 +6,10 @@
 
 
 <div class="form-group">
-    <label for="">Number Of Hours</label>
+    <label for="">{{$massge}}</label>
+</div>
+<div class="form-group">
+    <label for="">Number Of Hours (Available Hours :{{$available_hours}})</label>
     <input type="text" class="form-control " name="hours_amounts" value="{{ old('hours_amounts', $task->hours_amounts) }}">
 </div>
 

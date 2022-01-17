@@ -75,7 +75,7 @@
         <div class="form-check">
             <input class="form-check-input" type="radio" name="payment_method" id="status-Checks" value="check" @if(old('status', $partTime->payment_method) == 'check') checked @endif>
             <label class="form-check-label" for="status-Checks">
-                Checks
+                Cheques
             </label>
         </div>
         <div class="form-check">

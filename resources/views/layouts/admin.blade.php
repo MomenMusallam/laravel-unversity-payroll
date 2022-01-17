@@ -162,9 +162,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="#" class="brand-link">
             <img src="{{ asset('assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light">University Payroll</span>
         </a>
 
         <!-- Sidebar -->
@@ -180,55 +180,223 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
 
             <!-- SidebarSearch Form -->
-            <div class="form-inline">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="form-inline">--}}
+{{--                <div class="input-group" data-widget="sidebar-search">--}}
+{{--                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">--}}
+{{--                    <div class="input-group-append">--}}
+{{--                        <button class="btn btn-sidebar">--}}
+{{--                            <i class="fas fa-search fa-fw"></i>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-           with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
+                @if(Auth::user()->user_type == "admin")
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item menu-{{request()->routeIs('admin.index') ? 'open' : ''}}">
+                            <a href="{{route('admin.index')}}" class="nav-link {{request()->routeIs('admin.index') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-{{request()->routeIs('full-time.index') ? 'open' : ''}}{{request()->routeIs('full-time.create') ? 'open' : ''}}">
+                            <a href="{{route('full-time.create')}}" class="nav-link {{request()->routeIs('full-time.index') ? 'active' : ''}}">
+                                {{--                            <i class="nav-icon fas fa-tachometer-alt"></i>--}}
+                                <p>
+                                    Full Time Employees
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('full-time.index')}}" class="nav-link {{request()->routeIs('full-time.index') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All Full Time Employees</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('full-time.create')}}" class="nav-link {{request()->routeIs('full-time.create') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create full-Time Emp</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-{{request()->routeIs('part-time.index') ? 'open' : ''}}{{request()->routeIs('part-time.create') ? 'open' : ''}}">
+                            <a href="{{route('part-time.create')}}" class="nav-link {{request()->routeIs('part-time.index') ? 'active' : ''}}">
+                                {{--                            <i class="nav-icon fas fa-tachometer-alt"></i>--}}
+                                <p>
+                                    Part Time Employees
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('part-time.index')}}" class="nav-link {{request()->routeIs('part-time.index') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All Part Time Employees</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('part-time.create')}}" class="nav-link {{request()->routeIs('part-time.create') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create Part-Time Emp</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-{{request()->routeIs('exports.view') ? 'open' : ''}}{{request()->routeIs('salary.index') ? 'open' : ''}}">
+                            <a href="{{route('exports.view')}}" class="nav-link {{request()->routeIs('exports.view') ? 'active' : ''}}">
+                                {{--                            <i class="nav-icon fas fa-tachometer-alt"></i>--}}
+                                <p>
+                                    Salaries
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('exports.view')}}" class="nav-link {{request()->routeIs('exports.view') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exports</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('salary.index')}}" class="nav-link {{request()->routeIs('salary.index') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Pay Salaries</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-{{request()->routeIs('admin.vacation') ? 'open' : ''}}">
+                            <a href="{{route('admin.vacation')}}" class="nav-link {{request()->routeIs('admin.vacation') ? 'active' : ''}}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Vacations
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-{{request()->routeIs('admin.edit') ? 'open' : ''}}">
+                            <a href="{{route('admin.edit')}}" class="nav-link {{request()->routeIs('admin.edit') ? 'active' : ''}}">
+                                <i class="far fa-user nav-icon"></i>
+                                <p>
+                                    Profile
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                @elseif(Auth::user()->user_type == "fulltime")
+
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item menu-{{request()->routeIs('fulltime.index') ? 'open' : ''}}">
+                            <a href="{{route('fulltime.index')}}" class="nav-link {{request()->routeIs('fulltime.index') ? 'active' : ''}}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-{{request()->routeIs('vacation.index') ? 'open' : ''}}{{request()->routeIs('vacation.create') ? 'open' : ''}}">
+                            <a href="{{route('vacation.index')}}" class="nav-link {{request()->routeIs('vacation.index') ? 'active' : ''}}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                     Vacations
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('vacation.index')}}" class="nav-link {{request()->routeIs('vacation.index') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All Vacations</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('vacation.create')}}" class="nav-link {{request()->routeIs('vacation.create') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create vacation</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-{{request()->routeIs('fulltime.incomes') ? 'open' : ''}}">
+                            <a href="{{route('fulltime.incomes')}}" class="nav-link {{request()->routeIs('fulltime.incomes') ? 'active' : ''}}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Incomes
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-{{request()->routeIs('full-time.profile') ? 'open' : ''}}">
+                            <a href="{{route('full-time.profile')}}" class="nav-link {{request()->routeIs('full-time.profile') ? 'active' : ''}}">
+                                <i class="far fa-user nav-icon"></i>
+                                <p>
+                                    Profile
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                @elseif(Auth::user()->user_type == "parttime")
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item menu-{{request()->routeIs('parttime.index') ? 'open' : ''}}">
+                        <a href="{{route('parttime.index')}}" class="nav-link {{request()->routeIs('parttime.index') ? 'active' : ''}}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Starter Pages
-                                <i class="right fas fa-angle-left"></i>
+                                Dashboard
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link active">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Active Page</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Inactive Page</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Simple Link
-                                <span class="right badge badge-danger">New</span>
-                            </p>
-                        </a>
-                    </li>
-                </ul>
+                        </li>
+                        <li class="nav-item menu-{{request()->routeIs('workinghours.index') ? 'open' : ''}}{{request()->routeIs('workinghours.create') ? 'open' : ''}}">
+                            <a href="{{route('workinghours.index')}}" class="nav-link {{request()->routeIs('workinghours.index') ? 'active' : ''}}">
+                                                            <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Worked Hours
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('workinghours.index')}}" class="nav-link {{request()->routeIs('workinghours.index') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All Worked Hours</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('workinghours.create')}}" class="nav-link {{request()->routeIs('workinghours.create') ? 'active' : ''}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create Worked Hours</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-{{request()->routeIs('parttime.incomes') ? 'open' : ''}}">
+                            <a href="{{route('parttime.incomes')}}" class="nav-link {{request()->routeIs('parttime.incomes') ? 'active' : ''}}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Incomes
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-{{request()->routeIs('part-time.profile') ? 'open' : ''}}">
+                            <a href="{{route('part-time.profile')}}" class="nav-link {{request()->routeIs('part-time.profile') ? 'active' : ''}}">
+                                                            <i class="far fa-user nav-icon"></i>
+                                <p>
+                                    Profile
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                @endif
             </nav>
             <!-- /.sidebar-menu -->
         </div>
@@ -253,6 +421,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content-header -->
 
         <!-- Main content -->
+
+        @yield('dashboard')
         <div class="content">
             <div class="container">
                 <div class="row">

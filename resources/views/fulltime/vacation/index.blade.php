@@ -2,7 +2,7 @@
 
 @section('title')
     @if(\Illuminate\Support\Facades\Auth::user()->user_type =='fulltime')
-    Hours <a href="{{ route('workinghours.create') }}">Create</a>
+    Vacation <a href="{{ route('vacation.create') }}">Create</a>
     @endif
 @endsection
 
@@ -22,22 +22,22 @@
         <tr>
             <th></th>
             <th>Date</th>
-            <th>Hours Amount</th>
+            <th>resone</th>
             <th>Status</th>
             <th>Adding date</th>
             <th>Delete</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($tasks as $task)
+        @foreach($vacations as $vacation)
             <tr>
                 <th>{{$loop->iteration}}</th>
-                <td>{{ $task->date }}</td>
-                <td>{{ $task->hours_amounts }}</td>
-                <td>{{ $task->notes }}</td>
-                <td>{{ $task->created_at }}</td>
-                @if($task->notes == "not paid")
-                <td><a href="{{ route('workinghours.destroy', $task->id) }}" class="btn btn-sm btn-danger">Delete</a></td>
+                <td>{{ $vacation->date }}</td>
+                <td>{{ $vacation->reason }}</td>
+                <td>{{ $vacation->notes }}</td>
+                <td>{{ $vacation->created_at }}</td>
+                @if($vacation->notes == "pending")
+                <td><a href="{{ route('vacation.destroy', $vacation->id) }}" class="btn btn-sm btn-danger">Delete</a></td>
                 @else
                     <td><a href="" class="btn btn-sm btn-danger disabled">Delete</a></td>
                 @endif
@@ -47,7 +47,7 @@
     </table>
 
 
-    {{ $tasks->links() }}
+    {{ $vacations->links() }}
 
 
 @endsection

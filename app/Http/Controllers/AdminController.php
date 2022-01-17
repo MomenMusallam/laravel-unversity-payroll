@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FullTimeEmployee;
+use App\Models\PartTimeEmployee;
+use App\Models\salary;
+use App\Models\User;
+use App\Models\Vacation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -13,7 +20,25 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $part = PartTimeEmployee::all();
+        $user->partNum = $part->count();
+        $full = FullTimeEmployee::all();
+        $user->fullNum = $full->count();
+        $full = Vacation::where('notes' , 'pending')->get();
+        $user->vacarions = $full->count();
+
+
+        $salaries= salary::all();
+        $total = 0 ;
+//        dd($salaries);
+        foreach ($salaries as $salary){
+            $total = $total + $salary->salary_amount;
+        }
+
+    $user->amount_paid = $total ;
+
+        return view('admin.index',['user'=> $user]);
     }
 
     /**
@@ -34,7 +59,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -54,9 +79,13 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $id = Auth::id();
+        $employee = User::findOrFail($id);
+        return view('admin.profile', [
+            'employee' =>$employee ,
+        ]);
     }
 
     /**
@@ -66,9 +95,17 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $userId = Auth::id();
+        $employee = User::findOrFail($userId);
+        if($request['password'] != '') {
+            $request['password'] = Hash::make($request['password']);
+        }else{
+            $request['password'] = $employee->password;
+        }
+        $employee->update( $request->all() );
+        return redirect()->route('admin.edit');
     }
 
     /**

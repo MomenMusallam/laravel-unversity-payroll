@@ -25,6 +25,7 @@
             <th>Num Vacations</th>
             <th>Tax</th>
             <th>Payment Method</th>
+            <th>Vacations</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -38,7 +39,15 @@
                 <td>{{ $employee->salary_amount }}</td>
                 <td>{{ $employee->number_of_vacations }}</td>
                 <td>{{ $employee->tax }}</td>
-                <td>{{ $employee->payment_method }}</td>
+
+            @if($employee->payment_method== "transfer")
+
+                    <td>Bank transfer</td>
+                @else
+                    <td>Cheques</td>
+                @endif
+                <td><a href="{{ route('admin.vacation.history', $employee->user_id) }}" class="btn btn-sm btn-success">Vacations</a></td>
+
                 <td><a href="{{ route('full-time.edit', $employee->user_id) }}" class="btn btn-sm btn-dark">Edit</a></td>
                 <td><a href="{{ route('full-time.destroy', $employee->user_id) }}" class="btn btn-sm btn-danger">Delete</a></td>
 

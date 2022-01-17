@@ -25,6 +25,7 @@
             <th>Total Hours</th>
             <th>Tax</th>
             <th>Payment Method</th>
+            <th>Workes Hours</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -38,7 +39,15 @@
                 <td>{{ $employee->hour_price }}</td>
                 <td>{{ $employee->total_hours }}</td>
                 <td>{{ $employee->tax }}</td>
-                <td>{{ $employee->payment_method }}</td>
+
+            @if($employee->payment_method == "transfer")
+
+                    <td>Bank transfer</td>
+                @else
+                    <td>Cheques</td>
+                @endif
+                <td><a href="{{ route('part-time.hours', $employee->user_id) }}" class="btn btn-sm btn-success">worked Hours</a></td>
+
                 <td><a href="{{ route('part-time.edit', $employee->user_id) }}" class="btn btn-sm btn-dark">Edit</a></td>
                 <td><a href="{{ route('part-time.destroy', $employee->user_id) }}" class="btn btn-sm btn-danger">Delete</a></td>
 

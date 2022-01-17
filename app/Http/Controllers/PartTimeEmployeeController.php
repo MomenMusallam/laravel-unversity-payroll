@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\FullTimeEmployee;
 use App\Models\PartTimeEmployee;
+use App\Models\PartTimeEmployeeHourWorked;
+use App\Models\salary;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,11 +13,38 @@ use Illuminate\Support\Facades\Hash;
 
 class PartTimeEmployeeController extends Controller
 {
+
+    public function incomes(){
+        $user = Auth::user();
+        $incomes = salary::where('user_id' , $user->id)->paginate(20);
+        return view('parttime.income',['user'=>$user , 'incomes' => $incomes]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function dashboard()
+    {
+        $user = Auth::user();
+        $sallary = salary::where('user_id' , $user->id)->get();
+        $totalIncome = 0 ;
+            foreach ($sallary as $sa){
+                $totalIncome = $totalIncome + $sa->total_salary;
+        }
+          $hours  =  PartTimeEmployeeHourWorked::where('notes' ,'not paid')->get();
+            $hours_amounts = 0 ;
+            foreach ($hours as $hour){
+                $hours_amounts=   $hours_amounts + $hour->hours_amounts;
+            }
+
+$user->total = $totalIncome;
+$user->hours_amounts =   $hours_amounts;
+        $parttime = PartTimeEmployee::where('user_id' , $user->id)->first();
+        $user->avrg =      $hours_amounts / $parttime->total_hours ;
+
+        return view('parttime.index' , ['user' => $user , 'parttime' => $parttime]);
+    }
     public function index()
     {
         $employees = User::join('part_time_employees', 'part_time_employees.user_id', '=', 'users.id')
