@@ -17,8 +17,9 @@ class CreateSalariesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->string('payment_method');
+            $table->float('salary_amount',8,2)->nullable();
             $table->string('tax')->nullable();
-            $table->float('total_salary',5,2)->nullable();
+            $table->float('total_salary',8,2)->nullable();
             $table->timestamps();
         });
     }

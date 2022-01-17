@@ -53,4 +53,12 @@ class User extends Authenticatable
         return $this->hasOne(FullTimeEmployee::class);
     }
 
+    public function partTimeEmployee()
+    {
+        return $this->hasOne(PartTimeEmployee::class);
+    }
+    public function salaties()
+    {
+        return $this->hasMany(salary::class);
+    }
 }

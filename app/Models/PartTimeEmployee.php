@@ -12,4 +12,11 @@ class PartTimeEmployee extends Model
     protected $fillable = [
         'user_id', 'specialization', 'graduation_year', 'date_of_appointment', 'hour_price', 'total_hours',
         'tax', 'payment_method'];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class );
+    }
+
 }

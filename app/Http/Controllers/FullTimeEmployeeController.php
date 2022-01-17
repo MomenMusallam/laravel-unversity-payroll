@@ -19,7 +19,7 @@ class FullTimeEmployeeController extends Controller
     {
         $employees = User::join('full_time_employees', 'full_time_employees.user_id', '=', 'users.id')
             ->select()
-            ->paginate(10);
+            ->paginate(1);
 //            dd($employees);
         return view('admin.fulltime.index', [
             'employees' => $employees,
