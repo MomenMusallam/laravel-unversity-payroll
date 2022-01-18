@@ -15,7 +15,7 @@ class FullTimeEmployeeController extends Controller
     public function incomes(){
         $user = Auth::user();
         $incomes = salary::where('user_id' , $user->id)->paginate(20);
-        return view('parttime.income',['user'=>$user , 'incomes' => $incomes]);
+        return view('fulltime.income',['user'=>$user , 'incomes' => $incomes]);
     }
     /**
      * Display a listing of the resource.

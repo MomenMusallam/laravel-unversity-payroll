@@ -8,9 +8,36 @@ use App\Models\PartTimeEmployeeHourWorked;
 use App\Models\salary;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SalaryController extends Controller
 {
+    public function invoice($id)
+    {
+        $salary = salary::with(['user'])->where('id' , $id)->first();
+        return view('admin.salaryinvoice',['salary'=>$salary]);
+    }
+
+    public function fulltimeinvoice($id)
+    {
+        $salary = salary::with(['user'])->where('id' , $id)->where('user_id' , Auth::id())->first();
+        if($salary != null){
+            return view('fulltime.salaryinvoice',['salary'=>$salary]);
+        }else{
+            return redirect()->route('fulltime.incomes');
+        }
+        }
+
+
+    public function parttimeinvoice($id)
+    {
+        $salary = salary::with(['user'])->where('id' , $id)->where('user_id' , Auth::id())->first();
+        if($salary != null){
+            return view('parttime.salaryinvoice',['salary'=>$salary]);
+        }else{
+            return redirect()->route('parttime.incomes');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +45,7 @@ class SalaryController extends Controller
      */
     public function exports()
     {
-        $exports = salary::with(['user'])->paginate(20);
+        $exports = salary::with(['user'])->paginate(10);
         return view('admin.salary.exports',['exports' =>$exports]);
     }
 

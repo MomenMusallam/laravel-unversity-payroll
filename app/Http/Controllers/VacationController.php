@@ -102,6 +102,10 @@ class VacationController extends Controller
         $vacation = Vacation::find($id);
         $vacation->notes = 'approved';
         $vacation->save();
+
+        $fulltime = FullTimeEmployee::where('user_id' , $vacation->user_id)->first();
+        $fulltime->number_of_vacations =  $fulltime->number_of_vacations - 1;
+        $fulltime->save();
         return redirect()->route('admin.vacation');
     }
     public function history( $id)

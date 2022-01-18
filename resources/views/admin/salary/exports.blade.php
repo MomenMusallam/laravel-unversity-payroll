@@ -43,7 +43,7 @@
                         <td>{{ $export->salary_amount }}</td>
                         <td>{{ $export->tax }}%</td>
                         <td>{{ $export->total_salary }}</td>
-                        <th>View Transaction</th>
+                <td><a href="{{ route('salary.invoice', $export->id) }}" class="btn btn-sm btn-dark">View Transaction</a></td>
 
 
             </tr>

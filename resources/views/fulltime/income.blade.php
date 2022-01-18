@@ -40,7 +40,7 @@
                         <td>{{ $income->salary_amount }}</td>
                         <td>{{ $income->tax }}%</td>
                         <td>{{ $income->total_salary }}</td>
-                        <th>View Transaction</th>
+                <td><a href="{{ route('fulltime.salary.invoice', $income->id) }}" class="btn btn-sm btn-dark">View Transaction</a></td>
 
 
             </tr>

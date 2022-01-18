@@ -35,7 +35,7 @@
                 <td>{{ $vacation->name }}</td>
                 <td>{{ $vacation->date }}</td>
                 <td>{{ $vacation->reason }}</td>
-                <td>{{ $vacation->vacations_amounts}}%</td>
+                <td>{{ $vacation->vacations_amounts}} Day</td>
                 <td><a href="{{ route('admin.vacation.approve', $vacation->id)}}" class="btn btn-sm btn-success">Approve</a></td>
 
 

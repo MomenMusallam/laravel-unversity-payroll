@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+
 class AdminController extends Controller
 {
     /**
@@ -106,6 +110,23 @@ class AdminController extends Controller
         }
         $employee->update( $request->all() );
         return redirect()->route('admin.edit');
+
+//
+//        $customer = new Buyer([
+//            'name'          => 'John Doe',
+//            'custom_fields' => [
+//                'email' => 'test@example.com',
+//            ],
+//        ]);
+//
+//        $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
+//
+//        $invoice = Invoice::make()
+//            ->buyer($customer)
+//            ->taxRate(15)
+//            ->addItem($item);
+//
+//        return $invoice->stream();
     }
 
     /**

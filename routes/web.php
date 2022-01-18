@@ -7,6 +7,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\VacationController;
 
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,9 @@ Route::get('/admin/salary/pay/{id}', [SalaryController::class, 'payForEmployee']
 Route::get('/admin/salary/payall/', [SalaryController::class, 'payForAllEmployess'])->name('payAll.index')->middleware('adminmiddleware');
 Route::get('/admin/salary/history/{id}', [SalaryController::class, 'showHistory'])->name('history.view')->middleware('adminmiddleware');
 Route::get('/admin/salary/exports', [SalaryController::class, 'exports'])->name('exports.view')->middleware('adminmiddleware');
+Route::get('/admin/salary/invoice/{id}', [SalaryController::class, 'invoice'])->name('salary.invoice')->middleware('adminmiddleware');
+
+
 //vacations
 Route::get('/admin/vacations', [VacationController::class, 'adminIndex'])->name('admin.vacation')->middleware('adminmiddleware');
 Route::get('/admin/vacations/{id}', [VacationController::class, 'aprove'])->name('admin.vacation.approve')->middleware('adminmiddleware');
@@ -62,6 +66,7 @@ Route::post('/full-time/vacation', [VacationController::class, 'store'])->name('
 Route::get('/full-time/vacation/{id}/delete', [VacationController::class, 'destroy'])->name('vacation.destroy')->middleware('fullTimemiddleware');
 //income
 Route::get('/full-time/income', [FullTimeEmployeeController::class, 'incomes'])->name('fulltime.incomes')->middleware('fullTimemiddleware');
+Route::get('/full-time/invoice/{id}', [SalaryController::class, 'fulltimeinvoice'])->name('fulltime.salary.invoice')->middleware('fullTimemiddleware');
 
 
 //part time employee
@@ -75,6 +80,7 @@ Route::post('/part-time/workinghours', [PartTimeEmployeeHourWorkedController::cl
 Route::get('/part-time/workinghours/{id}/delete', [PartTimeEmployeeHourWorkedController::class, 'destroy'])->name('workinghours.destroy')->middleware('partTimemiddleware');
 //income
 Route::get('/part-time/income', [PartTimeEmployeeController::class, 'incomes'])->name('parttime.incomes')->middleware('partTimemiddleware');
+Route::get('/part-time/invoice/{id}', [SalaryController::class, 'parttimeinvoice'])->name('parttime.salary.invoice')->middleware('partTimemiddleware');
 
 
 
@@ -83,7 +89,14 @@ Route::get('/part-time/income', [PartTimeEmployeeController::class, 'incomes'])-
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if(Auth::user()->user_type == "admin"){
+        return redirect()->route('admin.index');
+    }elseif(Auth::user()->user_type == "fulltime"){
+        return redirect()->route('fulltime.index');
+    }elseif(Auth::user()->user_type == "parttime"){
+        return redirect()->route('parttime.index');
+    }
+    return redirect()->route('');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

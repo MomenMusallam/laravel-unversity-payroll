@@ -290,6 +290,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
 
+                        <li class="nav-item menu-">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="nav-link" href="{{route('logout')}}"
+                                   onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </a>
+{{--                            <a href="{{route('admin.edit')}}" class="nav-link {{request()->routeIs('admin.edit') ? 'active' : ''}}">--}}
+
+
+                            </a>
+                            </form>
+                        </li>
+
                     </ul>
                 @elseif(Auth::user()->user_type == "fulltime")
 
@@ -343,6 +358,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item menu-">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="nav-link" href="{{route('logout')}}"
+                                   onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </a>
+                                {{--                            <a href="{{route('admin.edit')}}" class="nav-link {{request()->routeIs('admin.edit') ? 'active' : ''}}">--}}
+
+
+                                </a>
+                            </form>
+                        </li>
+
                     </ul>
                 @elseif(Auth::user()->user_type == "parttime")
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -393,6 +423,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     Profile
                                 </p>
                             </a>
+                        </li>
+                        <li class="nav-item menu-">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="nav-link" href="{{route('logout')}}"
+                                   onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </a>
+                                {{--                            <a href="{{route('admin.edit')}}" class="nav-link {{request()->routeIs('admin.edit') ? 'active' : ''}}">--}}
+
+
+                                </a>
+                            </form>
                         </li>
 
                     </ul>
